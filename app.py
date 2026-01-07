@@ -7,23 +7,33 @@ import time
 
 # --- ১. পেজ কনফিগারেশন ---
 st.set_page_config(page_title="গণিত দাদুর ক্লাস", page_icon="🧮", layout="centered")
+
+# --- [নতুন] মেনু ও গিটহাব বাটন লুকানোর কোড ---
+hide_menu_style = """
+    <style>
+    #MainMenu {visibility: hidden;} /* মেনু বাটন লুকাবে */
+    footer {visibility: hidden;}    /* নিচের 'Made with Streamlit' লুকাবে */
+    header {visibility: hidden;}    /* ওপরের বার (Deploy/Fork) লুকাবে */
+    </style>
+    """
+st.markdown(hide_menu_style, unsafe_allow_html=True)
+# -------------------------------------------
+
 st.title("🧮 গণিত দাদুর ক্লাস")
-st.caption("Developed by Ishtiaq Ahmed | Powered by Gemini Flash Latest")
+st.caption("Developed by Ishtiaq Ahmed | Powered by CSE Project Hub BD")
 
 # --- ২. API Key সেটআপ (সিকিউর) ---
-# GitHub-এ আপলোড করার সময় Key লুকানো থাকবে
 try:
     if "GEMINI_API_KEY" in st.secrets:
         api_key = st.secrets["GEMINI_API_KEY"]
     else:
-        # যদি লোকালে রান করেন, তখন এখানে Key দিতে পারেন (কিন্তু আপলোডের সময় মুছবেন)
         api_key = st.secrets.get("GEMINI_API_KEY", None)
 except FileNotFoundError:
-    st.error("API Key পাওয়া যায়নি! দয়া করে Secrets সেটআপ করুন।")
+    st.error("API Key পাওয়া যায়নি!")
     st.stop()
 
 if not api_key:
-    st.error("API Key সেট করা নেই! Settings > Secrets এ Key বসান।")
+    st.error("API Key সেট করা নেই!")
     st.stop()
 
 try:
